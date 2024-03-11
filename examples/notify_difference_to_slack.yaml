@@ -8,7 +8,7 @@ jobs:
     steps:
       - name: cdk diff
         id: diff
-        uses: youyo/aws-cdk-github-actions@master
+        uses: Flojolomo/aws-cdk-github-actions@main
         with:
           cdk_subcommand: 'diff'
           actions_comment: true
