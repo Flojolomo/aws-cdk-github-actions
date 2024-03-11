@@ -10,39 +10,6 @@ function parseInputs(){
 	fi
 }
 
-function installTypescript(){
-	npm install typescript
-}
-
-function installAwsCdk(){
-	echo "Install aws-cdk ${INPUT_CDK_VERSION}"
-	if [ "${INPUT_CDK_VERSION}" == "latest" ]; then
-		if [ "${INPUT_DEBUG_LOG}" == "true" ]; then
-			npm install -g aws-cdk
-		else
-			npm install -g aws-cdk >/dev/null 2>&1
-		fi
-
-		if [ "${?}" -ne 0 ]; then
-			echo "Failed to install aws-cdk ${INPUT_CDK_VERSION}"
-		else
-			echo "Successful install aws-cdk ${INPUT_CDK_VERSION}"
-		fi
-	else
-		if [ "${INPUT_DEBUG_LOG}" == "true" ]; then
-			npm install -g aws-cdk@${INPUT_CDK_VERSION}
-		else
-			npm install -g aws-cdk@${INPUT_CDK_VERSION} >/dev/null 2>&1
-		fi
-
-		if [ "${?}" -ne 0 ]; then
-			echo "Failed to install aws-cdk ${INPUT_CDK_VERSION}"
-		else
-			echo "Successful install aws-cdk ${INPUT_CDK_VERSION}"
-		fi
-	fi
-}
-
 function installPipRequirements(){
 	if [ -e "requirements.txt" ]; then
 		echo "Install requirements.txt"
@@ -61,9 +28,9 @@ function installPipRequirements(){
 }
 
 function runCdk(){
-	echo "Run cdk ${INPUT_CDK_SUBCOMMAND} ${*} \"${INPUT_CDK_STACK}\""
+	echo "Run npx cdk ${INPUT_CDK_SUBCOMMAND} ${*} \"${INPUT_CDK_STACK}\""
 	set -o pipefail
-	cdk ${INPUT_CDK_SUBCOMMAND} ${*} "${INPUT_CDK_STACK}" 2>&1 | tee output.log
+	npx cdk ${INPUT_CDK_SUBCOMMAND} ${*} "${INPUT_CDK_STACK}" 2>&1 | tee output.log
 	exitCode=${?}
 	set +o pipefail
 	echo "status_code=${exitCode}" >> $GITHUB_OUTPUT
@@ -99,8 +66,6 @@ ${output}
 function main(){
 	parseInputs
 	cd ${GITHUB_WORKSPACE}/${INPUT_WORKING_DIR}
-	installTypescript
-	installAwsCdk
 	installPipRequirements
 	runCdk ${INPUT_CDK_ARGS}
 }
