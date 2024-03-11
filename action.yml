@@ -1,4 +1,4 @@
-name: 'AWS CDK GitHub Actions'
+name: 'AWS CDK GitHub Actions For Yarn'
 description: 'Runs AWS-CDK via GitHub Actions.'
 author: 'Flojolomo <florian1siegel@googlemail.com>'
 branding:

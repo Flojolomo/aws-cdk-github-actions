@@ -1,6 +1,6 @@
-# AWS-CDK GitHub Actions
+# AWS-CDK GitHub Actions For Yarn
 
-AWS-CDK GitHub Actions allow you to run `cdk deploy` and `cdk diff` (among other cdk subcommands) on your pull requests to help you review.
+AWS-CDK GitHub Actions allow you to run `cdk deploy` and `cdk diff` (among other cdk subcommands) on your pull requests to help you review. It also supports `yarn` as package manager and utilizes the local dependencies. No packages are installed as part of the action.
 
 ## Supported language
 
